@@ -1,5 +1,23 @@
 # trackbrowser-survey
-Server program in Python to generate survey questions and collect responses
+Server application to generate survey questions and collect responses
+
+## Running server program
+Program is written in Python, with PyMongo for interacting with MongoDB and flask as a webserver. It is preferrable to run the app in a virtual environment. `virtualenv` is used in deployment. 
+
+Install `virtualenv`
+
+`$ pip install virtualenv`
+
+Install requirements
+
+`$ pip3 install -r requirements.txt`
+
+Run server application
+
+`$ python index.py`
+
+
+## Questionnaires
 
 **QUESTION 1**
 
