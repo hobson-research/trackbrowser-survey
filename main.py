@@ -9,26 +9,26 @@ list_users = ['Bubble', 'Dargude2', 'kakakyle0214 ', 'Katy', 'Lewyreus', 'Liangw
 DB_CLIENT = MongoClient('localhost', 27017)
 DB = DB_CLIENT.trackbrowser
 
+# MongoDB aggregation query pipeline to randomly sample a navigation
+RANDOM_NAV_PIPELINE = [
+	{
+		"$match": {
+			"userName": list_users[0],
+			"type": "navigation"
+		}
+	},
+	{
+		"$sample": { 
+			"size": 1
+		}
+	}
+]
 
 def main():
-	# MongoDB aggregation query pipeline to randomly sample a navigation
-	pipeline = [
-		{
-			"$match": {
-				"userName": list_users[0],
-				"type": "navigation"
-			}
-		},
-		{
-			"$sample": { 
-				"size": 1
-			}
-		}
-	]
 
 	# Randomly select a navigation entry
 	# MongoDB's aggregate query is used
-	for nav in DB.browsing_data.aggregate(pipeline):
+	for nav in DB.browsing_data.aggregate(RANDOM_NAV_PIPELINE):
 		random_navigation = nav	
 	
 	
@@ -52,6 +52,10 @@ def main():
 			"$lt": next_navigation.get("timestamp")
 		}
 	})
+
+	if screenshots.count is 1: 
+		print("Only 1 screenshot")
+		
 
 	# Query screenshot
 	print(random_navigation)
