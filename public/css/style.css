@@ -1,0 +1,204 @@
+/*--------------------------------------------------------------------------
+	1. Body
+--------------------------------------------------------------------------*/
+
+html {
+}
+
+body {
+	color: #000;
+	font-size: 16px;
+	line-height: 26px;
+	font-family: "Roboto", sans-serif;
+	font-weight: 400; 
+	-webkit-font-smoothing: antialiased;
+  	/* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%;
+	position: relative; 
+}
+
+	@media screen and (max-width: 767px) {
+		body {
+			font-size: 17px;
+			line-height: 32px;
+		}
+	}
+
+
+/*--------------------------------------------------------------------------
+	2. Typography
+--------------------------------------------------------------------------*/
+
+/* Links */
+a {
+	color: #000;
+	text-decoration: none;
+	outline: 0;
+}
+
+a:hover,
+a:focus {
+	color: #000;
+}
+
+/* Visibility */
+.hide {
+	display: none !important;
+}
+
+/* Highlighted Text */
+::selection {
+	background: #9e5bea;
+	color: #000;
+	text-shadow: none;
+}
+
+/* Firefox */
+::-moz-selection {
+	background: #9e5bea;
+	color: #000;
+	text-shadow: none;
+}
+
+::-webkit-input-placeholder {
+   color: #ccc;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #ccc;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #ccc; 
+}
+
+:-ms-input-placeholder {  
+   color: #ccc;
+}
+
+em,
+.italic {
+	font-style: italic;
+}
+
+strong,
+.bold {
+	font-weight: bold;
+}
+
+.align-center {
+	text-align: center; 
+}
+
+img {
+	max-width: 100%; 
+}
+
+
+/*--------------------------------------------------------------------------
+	3. Page Sections
+--------------------------------------------------------------------------*/
+
+
+	/*----------------------------------------------------------
+		3.1. Header
+	-----------------------------------------------------------*/
+
+	#meta {
+		padding: 40px 20px; 
+	}
+
+		#meta p {
+			text-align: center; 
+		}
+
+		#meta span.url {
+			color: #33cc22;
+			font-size: 20px; 
+			line-height: 20px; 
+			display: inline-block; 
+			padding-bottom: 9px; 
+			border-bottom: 1px solid #33cc22; 
+		}
+
+		#meta span.count {
+			color: #aaa;
+			font-size: 14px; 
+			line-height: 14px; 
+			display: inline-block; 
+			padding: 7px 7px; 
+			border: 1px solid #bbb; 
+			margin-left: 20px; 
+			border-radius: 4px; 
+		}
+
+
+	#survey {
+		font-size: 18px; 
+		line-height: 32px; 
+	}
+
+		#survey h4 {
+			font-size: 16px; 
+			line-height: 24px; 
+			margin-top: 20px; 
+			border-top: 1px solid #ddd; 
+			padding-top: 20px; 
+		}
+
+		#survey p {
+			margin-bottom: 20px; 
+			margin-top: 20px; 
+			border-top: 1px solid #ddd; 
+			padding-top: 20px; 
+		}
+
+		#survey textarea {
+			background: #f5f5f5; 
+			border: 1px solid #e5e5e5;
+			width: 100%; 
+			box-sizing: border-box; 
+			padding: 15px 20px;  
+			outline: none; 
+		}
+
+		#survey input[type=text] {
+			background: #f5f5f5; 
+			border: 1px solid #e5e5e5;
+			width: 100%; 
+			box-sizing: border-box; 
+			padding: 15px 20px;  
+		}
+
+		#survey input[type=submit] {
+			color: #fff; 
+			font-size: 24px; 
+			line-height: 24px; 
+			display: block; 
+			padding: 45px 40px; 
+			width: 100%; 
+			box-sizing: border-box; 
+			margin-top: 50px; 
+			background: #44dd33; 
+			border: none; 
+			border-top: 1px solid #33cc22; 
+			
+			cursor: pointer; 
+		}
+
+			#survey input[type=submit]:hover {
+				background: #33cc22; 
+			}
+
+
+	.screenshot-wrapper {
+		margin-bottom: 60px; 
+	}
+
+	.img-screenshot {
+		border: 1px solid #ccc; 
+	}
+
+	.question {
+		margin-top: 30px; 
+	}

@@ -1,0 +1,92 @@
+html
+	head
+		title= title
+
+		link(rel="stylesheet", href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css")
+		link(rel="stylesheet", href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic")
+		link(rel="stylesheet", href="/css/typegrid.css")
+		link(rel="stylesheet", href="/css/style.css")
+
+	body
+		section#meta
+			p 
+				span.url #{navObj.currentNav.url}
+				span.count #{navObj.screenshots.length} screenshot(s)
+
+
+		section#screenshots
+			.container
+				.desktop-12.columns
+					for screenshot in navObj.screenshots
+						.screenshot-wrapper
+							img.img-screenshot(src=`/screenshot/` + screenshot.fileName)
+
+		section#survey
+			form
+				.container
+					.question
+						.desktop-3.columns
+							h4 Question 1
+
+						.desktop-9.columns
+							p What kind of webpage is this? 
+
+							.item
+								input(type='radio' name='webapge-type' id='type1' value='search-engine')
+								label(for='type1') Search Engine (e.g., Google)
+
+							.item
+								input(type='radio' name='webapge-type' id='type2' value='data-aggregator')
+								label(for='type2') Data Aggregator (e.g., Yahoo Finance, Google Finance)
+
+							.item
+								input(type='radio' name='webapge-type' id='type3' value='investor-relations')
+								label(for='type3') A Company's Investor Relations Page
+
+							.item
+								input(type='radio' name='webapge-type' id='type4' value='sec-filings')
+								label(for='type4') Corporate Filings With The SEC (e.g., finding or reading 10-K, 10-Q, 8-K, etc.)
+
+							.item
+								input(type='radio' name='webapge-type' id='type5' value='news-article')
+								label(for='type5') News Article About a Company
+
+							.item
+								input(type='radio' name='webapge-type' id='type6' value='investment-blog')
+								label(for='type6') Investment Blog
+
+							.item
+								input(type='radio' name='webapge-type' id='type7' value='irrelevant')
+								label(for='type7') Irrelevant (e.g., checking mail, checking Facebook, etc.)
+
+							.item
+								input(type='radio' name='webapge-type' id='type8' value='other')
+								label(for='type8') Other
+
+						.clear
+
+
+
+					.question
+						.desktop-3.columns
+							h4 Question 2
+
+						.desktop-9.columns
+							p How would you characterize the research being done? 
+
+							textarea(cols='80' rows='4')
+
+						.clear
+
+
+
+					.question
+						.desktop-3.columns
+							h4 Question 3
+
+						.desktop-9.columns
+							p What company is being researched? 
+							input(type='text')
+
+				input(type='submit' value='Submit')
