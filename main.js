@@ -1,6 +1,7 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient; 
 const ObjectId = require('mongodb').ObjectId; 
+const pug = require('pug'); 
 
 const url = 'mongodb://localhost:27017/trackbrowser'; 
 
@@ -9,8 +10,12 @@ var http = require('http').Server(app);
 
 // set static assets
 app.use(express.static('public'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.locals.pretty = true;
+
+
+app.use('/screenshot', express.static('J:/trackbrowser-server-data/trackbrowser-server/data/userBrowsingData'));
+
 
 var db; 
 
@@ -44,7 +49,9 @@ var getConnection = new Promise(
 	}
 );
 
-var getRandomNavigation = function() {
+var getNavigationInfoById = function(objectId) {
+	console.log('getNavigationInfoById()');
+
 	var db = null; 
 
 	var results = {
@@ -57,12 +64,15 @@ var getRandomNavigation = function() {
 		function(resolve, reject) {
 			getConnection
 				.then((dbInstance) => {
-					db = dbInstance; 
+					console.log('db got it man'); 
 
-					return getRandomDocument(db); 
+					db = dbInstance;
+
+					return db.collection('browsing_data')
+						.findOne({ _id: ObjectId(objectId) })
 				})
-				.then((randomNav) => {
-					results.currentNav = randomNav; 
+				.then((currentNav) => {
+					results.currentNav = currentNav; 
 
 					return getNextNavigation(db, results.currentNav); 
 				})
@@ -72,9 +82,32 @@ var getRandomNavigation = function() {
 					return getScreenshots(db, results.currentNav, results.nextNav); 
 				})
 				.then((screenshots) => {
+					console.log('got ' + screenshots.length + ' screenshots'); 
+
 					results.screenshots = screenshots; 
 
 					resolve(results); 
+				})
+				.catch((err) => {
+					console.log('err in getNavigationInfoById()'); 
+					console.log(err);
+				});
+		}
+	);
+};
+
+var getRandomNavigation = function() {
+	return new Promise(
+		function(resolve, reject) {
+			getConnection
+				.then((db) => {
+					return getRandomDocument(db); 
+				})
+				.then((randomNav) => {
+					return getNavigationInfoById(randomNav._id); 
+				})
+				.then((navObject) => {
+					resolve(navObject); 
 				})
 				.catch((err) => {
 					console.log('err in getRandomNavigation()'); 
@@ -87,9 +120,9 @@ var getRandomNavigation = function() {
 
 
 var getRandomDocument = function(db) {
-	var tempLastNavTest = true; 
+	var isTest = false; 
 
-	if (tempLastNavTest) {
+	if (isTest) {
 		return db.collection('browsing_data')
 			.findOne({
 				_id: ObjectId('56f32f1e7e91454e069b7596')
@@ -141,22 +174,38 @@ var getScreenshots = function(db, currentNav, nextNav) {
 };
 
 app.get('/', function(req, res) {
-	res.end("Send some return data"); 
+	getRandomNavigation()
+		.then((navObj) => {
+			res.redirect('/navigation/' + navObj.currentNav._id); 
+		})
+		.catch((err) => {
+			console.log('Error in getting data'); 
+			console.log(err); 
+		});
 });
 
-/*
-	chained queries
 
-	1. connect to database
-	2. get a random navigation record
-	3. get the next navigation record (null if last navigation event)
-	4. find screenshots in between the two navigation events
+app.get('/navigation/:id', function(req, res) {
+	console.log(req.params); 
 
-	
-*/
+	getNavigationInfoById(req.params.id)
+		.then((navObj) => {
+			res.render('index', {
+				'navObj': navObj
+			});
+		})
+		.catch((err) => {
+			console.log('Error in getting data'); 
+			console.log(err); 
+		});
+});
+
+
+
 
 getRandomNavigation()
 	.then((navObj) => {
+		console.log('Oh yeah!!!!!!!!!!!'); 
 		console.log('results'); 
 		console.log(navObj); 
 
@@ -186,3 +235,7 @@ getRandomNavigation()
 		console.log('Error in getting data'); 
 		console.log(err); 
 	});
+
+
+
+init(); 
