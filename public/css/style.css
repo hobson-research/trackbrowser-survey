@@ -326,6 +326,16 @@ h2 {
 			}
 
 
+<<<<<<< HEAD
+=======
+	.screenshot-wrapper {
+		margin-bottom: 60px; 
+	}
+
+	.img-screenshot {
+		border: 1px solid #ccc; 
+	}
+>>>>>>> 37bcf7fb3894a778b1a912c27b3e0bc3c9d52fbd
 
 	.question {
 		margin-top: 30px; 
