@@ -9,16 +9,13 @@ html
 		link(rel="stylesheet", href="/css/style.css")
 
 	body
-		section#sessions
+		section#user-navigations
 			.container
 				.desktop-12.columns
-					h1 Sessions
+					h1 #{navigations.length} Navigation entries for username #{userName}
 
-				for session in sessions
-					.desktop-6.columns
-						h2 #{session.title}
+					for navigation in navigations
+						p
+							a(href=`/navigation/` + navigation._id) #{navigation.url}
 
-						for user in session.users
-							a(href=`/navigations/user/` + user).link-user #{user}
-
-				.clear
+						

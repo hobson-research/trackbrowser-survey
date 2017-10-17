@@ -99,38 +99,173 @@ img {
 	3. Page Sections
 --------------------------------------------------------------------------*/
 
+h1 {
+	font-size: 36px; 
+	line-height: 48px; 
+}
+
+h2 {
+	font-size: 24px; 
+	line-height: 36px; 
+}
 
 	/*----------------------------------------------------------
 		3.1. Header
 	-----------------------------------------------------------*/
 
-	#meta {
-		padding: 40px 20px; 
+	#sessions {
+		padding: 50px 0; 
 	}
 
-		#meta p {
+		#sessions h1 {
+			padding-bottom: 20px; 
+		}
+
+		#sessions h2 {
+			padding-bottom: 20px; 
+		}
+
+		#sessions a.link-user {
+			color: #999; 
+			display: block; 
+			border-top: 1px solid #ccc; 
+			padding: 8px 0; 
+		}
+
+			#sessions a.link-user:hover {
+				color: #33cc22; 
+				border-top-color: #33cc22; 
+			}
+
+	
+
+	#user-navigations {
+		padding: 50px 0; 
+	}
+
+		#user-navigations p {
+			font-size: 14px; 
+			line-height: 24px; 
+		}
+	
+	
+
+	#meta {
+		position: fixed; 
+		top: 0; 
+		left: 0; 
+		width: 100%; 
+		z-index: 100; 
+		font-size: 14px; 
+		line-height: 14px; 
+		box-shadow: 0 0 8px #ccc;
+	}
+
+		#meta .left {
+			position: absolute; 
+			top: 0; 
+			left: 0; 
+		}
+
+		#meta .right {
+			position: absolute; 
+			top: 0; 
+			right: 0; 	
+		}
+
+		#meta a.link-nav {
+			display: inline-block; 
+			padding: 14px 20px; 
+			color: #33cc22; 
+		}
+
+			#meta a.link-nav:hover {
+				color: #fff; 
+				background: #44dd33;
+			}
+
+		#meta .center {
+			background: #fff; 
 			text-align: center; 
 		}
 
 		#meta span.url {
-			color: #33cc22;
-			font-size: 20px; 
-			line-height: 20px; 
+			color: #444;
 			display: inline-block; 
-			padding-bottom: 9px; 
-			border-bottom: 1px solid #33cc22; 
+			padding: 14px 0; 
 		}
 
 		#meta span.count {
-			color: #aaa;
-			font-size: 14px; 
-			line-height: 14px; 
+			color: #ccc;
+			font-size: 12px; 
+			line-height: 12px; 
 			display: inline-block; 
 			padding: 7px 7px; 
 			border: 1px solid #bbb; 
 			margin-left: 20px; 
 			border-radius: 4px; 
 		}
+
+
+	#screenshots {
+		padding-top: 80px; 
+	}
+
+	.screenshot-wrapper {
+		margin-bottom: 60px; 
+	}
+	
+		.screenshot-wrapper .duration {
+			font-size: 14px; 
+			line-height: 14px; 
+		}
+
+			.screenshot-wrapper .duration .time {
+				float: left; 
+				color: #fff; 
+				display: inline-block; 
+				background: #111; 
+				padding: 14px 18px; 
+				border-top-left-radius: 3px; 
+				border-top-right-radius: 3px; 
+			}
+
+			.screenshot-wrapper .duration .unit {
+				color: #888; 
+			}
+
+			.screenshot-wrapper .duration .bar {
+				position: relative; 
+				float: left; 
+				background: #33cc22; 
+				width: 500px; 
+				height: 4px; 
+				top: 18px; 
+			}
+
+				.screenshot-wrapper .duration .bar .circle {
+					position: absolute; 
+					background: #fff; 
+					border: 4px solid #33cc22; 
+					padding: 4px; 
+					box-sizing: border-box; 
+					top: -6px; 
+					right: -2px; 
+					border-radius: 10px; 
+				}
+
+			.screenshot-wrapper .duration .desc {
+				float: left; 
+				position: relative; 
+				top: 5px; 
+				left: 10px; 
+			}
+
+
+	.img-screenshot {
+		border: 1px solid #ccc; 
+	}
+
 
 
 	#survey {
@@ -191,13 +326,6 @@ img {
 			}
 
 
-	.screenshot-wrapper {
-		margin-bottom: 60px; 
-	}
-
-	.img-screenshot {
-		border: 1px solid #ccc; 
-	}
 
 	.question {
 		margin-top: 30px; 

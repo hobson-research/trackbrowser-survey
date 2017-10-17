@@ -1,0 +1,19 @@
+{
+	// Customer module configs
+	"dbConfig": {
+		"url": "mongodb://localhost:27017/trackbrowser"
+	}, 
+	"dataDirectory": "J:/trackbrowser-server-data/trackbrowser-server/data/userBrowsingData", 
+	"sessions":  [
+		{ 
+			"title": "Fall 2016",
+			"users": ["Bubble", "Dargude2", "kakakyle0214 ", "Katy", "Lewyreus", "Liangwenqian93 ", "Locust", "Naruto", "Pommel9", "rookie", "ssshah10", "tanvirotkar", "ventra", "zlow4", "zsosa"]
+		}, 
+		{
+			"title": "Spring 2017", 
+			"users": ["Cross of Chaos", "forinvestment", "jstl", "karand2", "qpzm6661606", "Songlin", "Stove25", "twfin419", "UIUCIB", "Vel", "wx200136ai", "rocco33"]
+		}
+	]
+	
+	
+  }
