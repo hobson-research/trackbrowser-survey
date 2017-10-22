@@ -141,12 +141,43 @@ h2 {
 
 	#user-navigations {
 		padding: 50px 0; 
+		font-size: 14px; 
+		line-height: 24px; 
 	}
 
-		#user-navigations p {
-			font-size: 14px; 
-			line-height: 24px; 
+		#user-navigations {
+
 		}
+
+			#user-navigations .list-navigations {
+				margin-top: 30px; 
+			}
+
+			#user-navigations a.item {
+				display: block; 
+				padding: 4px 0; 
+			}
+
+			#user-navigations span.date {
+				color: #aaa; 
+				font-size: 12px; 
+				line-height: 12px; 
+				display: inline-block; 
+				padding-right: 20px; 
+			}
+
+				#user-navigations a.item:hover span.date {
+					color: #33cc22; 
+				}
+
+			#user-navigations span.url {
+				color: #444; 
+				display: inline-block; 
+			}
+
+				#user-navigations a.item:hover span.url {
+					color: #33cc22;
+				}
 	
 	
 
@@ -189,6 +220,14 @@ h2 {
 			text-align: center; 
 		}
 
+		#meta span.session-name {
+			color: #ff5544; 
+			display: inline-block; 
+			padding-right: 10px; 
+			border-right: 2px solid #ddd; 
+			margin-right: 10px; 
+		}
+
 		#meta span.url {
 			color: #444;
 			display: inline-block; 
@@ -201,8 +240,8 @@ h2 {
 			line-height: 12px; 
 			display: inline-block; 
 			padding: 7px 7px; 
-			border: 1px solid #bbb; 
-			margin-left: 20px; 
+			border: 1px solid #ccc; 
+			margin-left: 15px; 
 			border-radius: 4px; 
 		}
 
@@ -226,8 +265,6 @@ h2 {
 				display: inline-block; 
 				background: #111; 
 				padding: 14px 18px; 
-				border-top-left-radius: 3px; 
-				border-top-right-radius: 3px; 
 			}
 
 			.screenshot-wrapper .duration .unit {
@@ -257,7 +294,7 @@ h2 {
 			.screenshot-wrapper .duration .desc {
 				float: left; 
 				position: relative; 
-				top: 5px; 
+				top: 10px; 
 				left: 10px; 
 			}
 
@@ -305,7 +342,31 @@ h2 {
 			padding: 15px 20px;  
 		}
 
-		#survey input[type=submit] {
+		#survey input[type=submit].submit-irrelavant {
+			color: #fff; 
+			background: #777; 
+			font-size: 20px; 
+			line-height: 20px; 
+			display: block; 
+			padding: 45px 40px; 
+			width: 100%; 
+			box-sizing: border-box; 
+			margin-top: 50px; 
+			margin-bottom: 30px; 
+			border: none; 
+			border: 1px solid #666; 
+			border-radius: 100px; 
+			
+			cursor: pointer; 
+		}
+
+			#survey input[type=submit].submit-irrelavant:hover {
+				background: #666; 
+			}
+
+
+
+		#survey input[type=submit].submit-form {
 			color: #fff; 
 			font-size: 24px; 
 			line-height: 24px; 
@@ -321,7 +382,7 @@ h2 {
 			cursor: pointer; 
 		}
 
-			#survey input[type=submit]:hover {
+			#survey input[type=submit].submit-form:hover {
 				background: #33cc22; 
 			}
 

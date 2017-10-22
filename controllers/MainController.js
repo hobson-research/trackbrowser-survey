@@ -22,7 +22,7 @@ MainController.getUserNavigations = function(req, res) {
 };
 
 MainController.getNavigation = function(req, res) {
-	Navigation.getNavigationInfoById(req.params.id)
+	Navigation.getNavigationInfoById(req.params.trackId)
 		.then((navObj) => {
 			res.render('navigation', {
 				'navObj': navObj
@@ -34,18 +34,17 @@ MainController.getNavigation = function(req, res) {
 		});
 };
 
-MainController.getRandomNavigation = function(req, res) {
-	Navigation.getRandomNavigation()
-	.then((navObj) => {
-		res.redirect('/navigation/' + navObj.currentNav._id); 
-	})
-	.catch((err) => {
-		console.log('Error in getting data'); 
-		console.log(err); 
-	});
+MainController.postSurvey = function(req, res) {
+	console.log(req.body); 
+
+	if(req.body.next != '') {
+		res.redirect('/navigation/' + req.body.next); 
+	} else {
+		res.send('End of survey'); 
+	}
 }; 
 
-MainController.postSurvey = function(req, res) {
+MainController.markIrrelavant = function(req, res) {
 	console.log(req.body); 
 
 	if(req.body.next != '') {

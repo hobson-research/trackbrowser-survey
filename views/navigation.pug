@@ -14,15 +14,21 @@ html
 				a.link-nav(href='/') Home
 
 			.center
+				- var sessionDate = new Date(navObj.date)
+				- var sessionName = navObj.userName + '-' + navObj.date.substr(8, 3) + ' ' + navObj.date.substr(5, 2)
+				span.session-name #{sessionName}
+
+
 				a.link-url
-					- var url = navObj.currentNav.url
+					- var url = navObj.url
 					- var trimmedUrl = (url.length > 60) ? url.substr(0, 60 - 1) + '...' : url; 
 					span.url #{trimmedUrl}
 				
 				span.count #{navObj.screenshots.length} screenshot(s)
 
 			.right
-				a.link-nav(href=`/navigation/` + navObj.nextNavId) Skip &gt; 
+				if (navObj.nextTrackId != null)
+					a.link-nav(href=`/navigation/` + navObj.nextTrackId) Skip &gt; 
 
 			.clear
 
@@ -35,19 +41,32 @@ html
 							.duration
 								.time Viewed for
 
+								- var barWidth = Math.max(20, Math.min(Number((screenshot.duration / 1000).toFixed(0)) * 50, 500)) + 'px'
 								.bar(style={
-									'width': Math.max(20, Math.min(Number((screenshot.duration / 1000).toFixed(0)) * 50, 500)) + 'px'
+									'width': barWidth
 								})
 									.circle 
 
-								.desc #{Number((screenshot.duration / 1000).toFixed(1))} 
-									| second(s)
+
+								- var durationText = ''	
+								- if (screenshot.duration == null) durationText = 'Unknown'
+								- else if (screenshot.duration > 10000) durationText = 'Longer than 10 seconds' 
+								- else durationText = Number((screenshot.duration / 1000).toFixed(1)) + ' seconds'; 
+								.desc #{durationText} 
 
 							a.link-image(href=`/screenshot/` + screenshot.fileName)
 								img.img-screenshot(src=`/screenshot/` + screenshot.fileName)
 
+
+
 		section#survey
-			form(action=`/navigation/` + navObj.currentNav._id method='POST')
+			form(action=`/navigation/` + navObj.trackId + `/irrelavant` method='POST')
+				.container
+					.desktop-12.columns
+						input(type='hidden' name='next' value=navObj.nextTrackId)
+						input.submit-irrelavant(type='submit' value='This webpage is irrelavant (e.g., checking mail, checking Facebook, etc.)')
+
+			form(action=`/navigation/` + navObj.trackId method='POST')
 				.container
 					.question
 						.desktop-3.columns
@@ -112,5 +131,5 @@ html
 							p What company is being researched? 
 							input(name='company-name' type='text')
 
-				input(type='hidden' name='next' value=navObj.nextNavId)
-				input(type='submit' value='Submit')
+				input(type='hidden' name='next' value=navObj.nextTrackId)
+				input.submit-form(type='submit' value='Submit')

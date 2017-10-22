@@ -1,5 +1,4 @@
 {
-	// Customer module configs
 	"dbConfig": {
 		"url": "mongodb://localhost:27017/trackbrowser"
 	}, 
@@ -13,7 +12,6 @@
 			"title": "Spring 2017", 
 			"users": ["Cross of Chaos", "forinvestment", "jstl", "karand2", "qpzm6661606", "Songlin", "Stove25", "twfin419", "UIUCIB", "Vel", "wx200136ai", "rocco33"]
 		}
-	]
-	
-	
-  }
+	], 
+	"excludeHostnames": ["webmail.illinois.edu", "compass2g.illinois.edu", "facebook"]	
+}

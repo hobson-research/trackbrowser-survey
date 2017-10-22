@@ -12,10 +12,13 @@ html
 		section#user-navigations
 			.container
 				.desktop-12.columns
-					h1 #{navigations.length} Navigation entries for username #{userName}
+					h2 #{navigations.length} Navigation entries for username #{userName}
 
-					for navigation in navigations
-						p
-							a(href=`/navigation/` + navigation._id) #{navigation.url}
+					.list-navigations
+						for navigation in navigations
+							a.item(href=`/navigation/` + navigation.trackId)
+								span.date #{navigation.date}
 
-						
+								- var displayUrl = (navigation.url.length > 80) ? navigation.url.substr(0, 80) + '...' : navigation.url;
+
+								span.url #{displayUrl}

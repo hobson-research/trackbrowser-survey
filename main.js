@@ -28,6 +28,7 @@ app.use(bodyParser.json())
 
 app.get('/', MainController.getIndex);
 app.get('/navigations/user/:userName', MainController.getUserNavigations); 
-app.get('/navigation/:id', MainController.getNavigation);
+app.get('/navigation/:trackId', MainController.getNavigation);
 
-app.post('/navigation/:id', MainController.postSurvey); 
+app.post('/navigation/:trackId', MainController.postSurvey); 
+app.post('/navigation/:trackId/irrelavant', MainController.markIrrelavant); 
