@@ -2,19 +2,28 @@
 Server application to generate survey questions and collect responses
 
 ## Running server program
-Program is written in Python, with PyMongo for interacting with MongoDB and flask as a webserver. It is preferrable to run the app in a virtual environment. `virtualenv` is used in deployment. 
+Program is written in `nodejs`, with MongoDB and express as a webserver. It requires `nodejs` version to be higher than 7.x to use `async/await` features of Javascript. 
 
-Install `virtualenv`
+Install npm packages
 
-`$ pip install virtualenv`
+`$ npm install`
 
-Install requirements
+Configure screenshot directories and participant usernames in config file
 
-`$ pip3 install -r requirements.txt`
+`$ vim config/default.json`
+
+Run a script to pre-process database navigation entries
+
+
+`$ node clone-trackbrowser-db.js`
 
 Run server application
 
-`$ python index.py`
+`$ noe main.js`
+
+
+### Pre-processing MongoDB collection and screenshots
+
 
 
 ## Questionnaires
