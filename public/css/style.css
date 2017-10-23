@@ -133,9 +133,39 @@ h2 {
 		}
 
 			#sessions a.link-user:hover {
-				color: #33cc22; 
-				border-top-color: #33cc22; 
+				color: #000; 
+				border-top-color: #000; 
 			}
+
+			#sessions a.link-user span.username {
+				display: inline-block; 
+			}
+
+			#sessions a.link-user span.count {
+				float: right; 
+				font-size: 12px; 
+				line-height: 16px; 
+				display: inline-block; 
+				padding: 2px 4px; 
+				margin-top: 3px; 
+				margin-left: 5px; 
+				border-radius: 3px;
+				color: #fff; 
+				background: #33cc22; 
+			}
+
+				#sessions a.link-user:hover span.count {
+					background: #000;
+				}
+
+			#sessions a.link-user span.count.not-found {
+				background: #ff5544; 
+			}
+
+				#sessions a.link-user:hover span.count.not-found {
+					color: #ff5544; 
+					background: #000; 
+				}
 
 	
 

@@ -19,6 +19,14 @@ html
 						h2 #{session.title}
 
 						for user in session.users
-							a(href=`/navigations/user/` + user).link-user #{user}
+							a(href=`/navigations/user/` + user).link-user 
+								span.username #{user}
+								- var count = countMap[user.toLowerCase()]
+
+								if (count > 0)
+									span.count #{count}
+								else
+									span.count.not-found Not found
+
 
 				.clear

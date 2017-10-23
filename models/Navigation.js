@@ -27,6 +27,35 @@ Navigation.getNavigationsByUserName = function(userName) {
 
 
 
+Navigation.getAllUsersNavigationCounts = function() {
+	return new Promise((resolve, reject) => {
+		var userCountMap = {}; 
+
+		browsingDataCollection
+			.find({
+				'type': 'navigation'
+			})
+			.project({
+				'userName': 1
+			})
+			.toArray()
+			.then((allNavs) => {
+				allNavs.forEach((doc) => {
+					if (userCountMap.hasOwnProperty(doc.userName)) userCountMap[doc.userName]++; 
+					else userCountMap[doc.userName] = 1; 
+				});
+
+				resolve(userCountMap); 
+			})
+			.catch((err) => {
+				console.log(err); 
+				reject(err); 
+			});
+	}); 
+};
+
+
+
 Navigation.getNavigationInfoById = function(trackId) {
 	return new Promise(
 		(resolve, reject) => {

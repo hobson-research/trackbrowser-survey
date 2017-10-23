@@ -4,9 +4,19 @@ const Navigation = require(__dirname + '/../models/Navigation');
 var MainController = {}; 
 
 MainController.getIndex = function(req, res) {
-	res.render('index', {
-		'sessions': config.get('sessions')
-	})
+	Navigation.getAllUsersNavigationCounts()
+		.then((countMap) => {
+			res.render('index', {
+				'sessions': config.get('sessions'), 
+				'countMap': countMap
+			})
+		})
+		.catch((err) => {
+			console.log(err); 
+			res.send('Error retrieving navigation counts'); 
+		});
+
+
 };
 
 MainController.getUserNavigations = function(req, res) {
