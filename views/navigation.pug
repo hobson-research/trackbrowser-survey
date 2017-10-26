@@ -60,12 +60,6 @@ html
 
 
 		section#survey
-			form(action=`/navigation/` + navObj.trackId + `/irrelavant` method='POST')
-				.container
-					.desktop-12.columns
-						input(type='hidden' name='next' value=navObj.nextTrackId)
-						input.submit-irrelavant(type='submit' value='This webpage is irrelavant (e.g., checking mail, checking Facebook, etc.)')
-
 			form(action=`/navigation/` + navObj.trackId method='POST')
 				.container
 					.question

@@ -21,6 +21,7 @@ var _db;
 var _browsingDataCollection; 
 var _surveyCollection; 
 var screenshotPath = config.get('dataDirectory'); 
+var googleMainPageCount = 0; 
 
 
 
@@ -50,11 +51,15 @@ MongoClient.connect(dbUrl)
 			.toArray(); 
 	})
 	.then(async (docs) => {
-		console.log('Found ' + docs.length + ' documents'); 
- 
+		console.log('=========================================='); 
+		console.log('0. Select entries of target users');
+		console.log(docs.length + ' total navigation and screenshot entries found (unfiltered)'); 
+ 		
+ 		console.log('=========================================='); 
+ 		console.log('1. URL Check'); 
  		// filter only valid URLs
 		docs = docs.filter(isValidNavigation); 
-		console.log(docs.length + ' left after filtering out invalid URLs'); 
+		console.log(docs.length + ' entries left after filtering out URLs with possible private information'); 
 
 		var filteredDocs = []; 
 
@@ -91,6 +96,10 @@ MongoClient.connect(dbUrl)
 		}
 
 		console.log(navCount + ' navigation entries (excluding screenshots) before arrangement'); 
+		console.log(googleMainPageCount + ' google.com main page URLs'); 
+
+		console.log('=========================================='); 
+ 		console.log('2. Screenshot Check'); 
 		console.log(validScreenshotCount + ' valid screenshots, ' + invalidScreenshotCount + ' invalid screenshots'); 
 
 		return arrangeNavigations(filteredDocs); 
@@ -237,13 +246,13 @@ var arrangeNavigations = function(docs) {
 	}
 
 	console.log(negativeDurationsLength + ' screenshots have negative duration values, will be set to null'); 
-	console.log(noScreenshotsLength + ' items do not have screenshots'); 
-	console.log('Nav count after arrangement = ' + allNavs.length); 
+	console.log(noScreenshotsLength + ' navigation entries do not have screenshots'); 
+	console.log('=========================================='); 
+	console.log('Results');
+	console.log(allNavs.length + ' navigation entries after pre-processing'); 
 
 	return allNavs; 
 }; 
-
-
 
 var isValidNavigation = function(navObj) {
 	urlString = navObj.url; 
@@ -260,7 +269,8 @@ var isValidNavigation = function(navObj) {
 
 	else if (urlObj.hostname == 'www.google.com') {
 		if (urlObj.hash == null && (urlObj.path == '/?gws_rd=ssl' || urlObj.path == '/')) {
-			return false; 	
+			googleMainPageCount++; 
+			return true; 
 		}
 	}
 
@@ -278,6 +288,8 @@ var isValidNavigation = function(navObj) {
 
 
 var isValidScreenshot = function(fileName) {
+	return true; 
+	/*
 	return new Promise(
 		(resolve, reject) => {
 			var filePath = path.join(screenshotPath, fileName);
@@ -325,6 +337,7 @@ var isValidScreenshot = function(fileName) {
 			}
 		}
 	);
+	*/
 };
 
 

@@ -54,14 +54,5 @@ MainController.postSurvey = function(req, res) {
 	}
 }; 
 
-MainController.markIrrelavant = function(req, res) {
-	console.log(req.body); 
-
-	if(req.body.next != '') {
-		res.redirect('/navigation/' + req.body.next); 
-	} else {
-		res.send('End of survey'); 
-	}
-}; 
 
 module.exports = MainController; 

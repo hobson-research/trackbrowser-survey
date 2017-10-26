@@ -372,28 +372,6 @@ h2 {
 			padding: 15px 20px;  
 		}
 
-		#survey input[type=submit].submit-irrelavant {
-			color: #fff; 
-			background: #777; 
-			font-size: 20px; 
-			line-height: 20px; 
-			display: block; 
-			padding: 45px 40px; 
-			width: 100%; 
-			box-sizing: border-box; 
-			margin-top: 50px; 
-			margin-bottom: 30px; 
-			border: none; 
-			border: 1px solid #666; 
-			border-radius: 100px; 
-			
-			cursor: pointer; 
-		}
-
-			#survey input[type=submit].submit-irrelavant:hover {
-				background: #666; 
-			}
-
 
 
 		#survey input[type=submit].submit-form {

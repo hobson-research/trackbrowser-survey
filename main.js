@@ -31,4 +31,3 @@ app.get('/navigations/user/:userName', MainController.getUserNavigations);
 app.get('/navigation/:trackId', MainController.getNavigation);
 
 app.post('/navigation/:trackId', MainController.postSurvey); 
-app.post('/navigation/:trackId/irrelavant', MainController.markIrrelavant); 
