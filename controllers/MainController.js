@@ -1,41 +1,87 @@
 const config = require('config'); 
 const Navigation = require(__dirname + '/../models/Navigation');
 
+const webpageTypes = config.get('webpageTypes'); 
+
 var MainController = {}; 
 
 MainController.getIndex = function(req, res) {
-	Navigation.getAllUsersNavigationCounts()
+	renderIndex(req, res, false); 
+};
+
+MainController.getUserNavigations = function(req, res) {
+	renderUserNavigations(req, res, false); 
+};
+
+MainController.getNavigation = function(req, res) {
+	renderNavigation(req, res, false); 
+};
+
+MainController.getResponseIndex = function(req, res) {
+	renderIndex(req, res, true); 
+};
+
+MainController.getUserNavigationResponse = function(req, res) {
+	renderUserNavigations(req, res, true); 
+};
+
+MainController.getNavigationResponse = function(req, res) {
+	renderNavigation(req, res, true); 
+};
+
+MainController.postSurvey = function(req, res) {
+	var responseObj = {
+		'timestamp': new Date().getTime(), 
+		'webpage-type': req.body['webpage-type'], 
+		'characterize-research': req.body['characterize-research'], 
+		'company-name': req.body['company-name']
+	};
+
+	Navigation.recordResponse(req.params.trackId, responseObj)
+		.then((recordResult) => {
+			if(req.body.next != '') {
+				res.redirect('/navigation/' + req.body.next); 
+			} else {
+				res.send('End of survey'); 
+			}
+		});
+}; 
+
+
+
+var renderIndex = function(req, res, isResponse) {
+	Navigation.getAllUsersNavigationCounts(isResponse)
 		.then((countMap) => {
 			res.render('index', {
 				'sessions': config.get('sessions'), 
-				'countMap': countMap
+				'countMap': countMap, 
+				'isResponse': isResponse
 			})
 		})
 		.catch((err) => {
 			console.log(err); 
 			res.send('Error retrieving navigation counts'); 
 		});
-
-
 };
 
-MainController.getUserNavigations = function(req, res) {
-	console.log(req.params); 
-
-	Navigation.getNavigationsByUserName(req.params.userName)
+var renderUserNavigations = function(req, res, isResponse) {
+	Navigation.getNavigationsByUserName(req.params.userName, isResponse)
 		.then((navigations) => {
 			res.render('user-navigations', {
 				'userName': req.params.userName, 
-				'navigations': navigations
+				'navigations': navigations, 
+				'isResponse': isResponse
 			});
 		});
 };
 
-MainController.getNavigation = function(req, res) {
+var renderNavigation = function(req, res, isResponse) {
 	Navigation.getNavigationInfoById(req.params.trackId)
 		.then((navObj) => {
 			res.render('navigation', {
-				'navObj': navObj
+				'navObj': navObj, 
+				'isResponse': isResponse, 
+				'webpageTypes' : webpageTypes
 			});
 		})
 		.catch((err) => {
@@ -44,15 +90,7 @@ MainController.getNavigation = function(req, res) {
 		});
 };
 
-MainController.postSurvey = function(req, res) {
-	console.log(req.body); 
 
-	if(req.body.next != '') {
-		res.redirect('/navigation/' + req.body.next); 
-	} else {
-		res.send('End of survey'); 
-	}
-}; 
 
 
 module.exports = MainController; 

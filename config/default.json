@@ -13,5 +13,15 @@
 			"users": ["CrossofChaos", "forinvestment", "jstl", "karand2", "qpzm6661606", "Songlin", "Stove25", "twfin419", "UIUCIB", "Vel", "wx200136ai", "roco33"]
 		}
 	], 
-	"excludeHostnames": ["webmail.illinois.edu", "compass2g.illinois.edu", "facebook", "gmail.com", "accounts.google.com"]	
+	"excludeHostnames": ["webmail.illinois.edu", "compass2g.illinois.edu", "facebook", "gmail.com", "accounts.google.com"],
+	"webpageTypes": {
+		"search-engine": "Search Engine (e.g., Google)", 
+		"data-aggregator": "Data Aggregator (e.g., Yahoo Finance, Google Finance)", 
+		"investor-relations": "A Company's Investor Relations Page", 
+		"sec-filings": "Corporate Filings With The SEC (e.g., finding or reading 10-K, 10-Q, 8-K, etc.)", 
+		"news-article": "News Article About a Company", 
+		"investment-blog": "Investment Blog", 
+		"irrelevant": "Irrelevant (e.g., checking mail, checking Facebook, etc.)", 
+		"other": "Other"
+	}
 }

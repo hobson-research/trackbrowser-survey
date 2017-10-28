@@ -1,0 +1,33 @@
+#survey-responses
+	.container
+		.desktop-12.columns
+			h2 #{navObj.responses.length} response(s)
+			
+
+		for response, responseIndex in navObj.responses
+			.item
+				.desktop-12.columns
+					h3 
+						span Submitted on #{new Date(response.timestamp).toISOString().substr(0, 10)}
+
+				.clear
+
+				.desktop-4.columns
+					h4 Question 1
+					p.question What kind of webpage is this? 
+
+					p.answer= webpageTypes[response['webpage-type']]
+
+				.desktop-4.columns
+					h4 Question 2
+					p.question How would you characterize the research being done?
+
+					p.answer= response['characterize-research']
+
+				.desktop-4.columns
+					h4 Question 3
+					p.question What company is being researched? 
+					
+					p.answer= response['company-name']
+
+				.clear

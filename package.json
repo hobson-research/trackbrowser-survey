@@ -20,10 +20,11 @@
     "body-parser": "^1.18.2",
     "config": "^1.26.2",
     "express": "^4.16.1",
-    "mongo-express": "^0.42.3",
+    "mongo-express": "^0.43.1",
     "mongodb": "^2.2.31",
     "pngjs": "^3.3.0",
     "pug": "^2.0.0-rc.4",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "winston": "^2.4.0"
   }
 }

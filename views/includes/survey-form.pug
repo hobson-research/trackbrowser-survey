@@ -1,0 +1,47 @@
+section#survey
+	form(action=`/navigation/` + navObj.trackId method='POST')
+		.container
+			.question
+				.desktop-12.columns
+
+				.clear
+
+				.desktop-3.columns
+					h4 Question 1
+
+				.desktop-9.columns
+					p What kind of webpage is this? 
+
+					- var radioIndex = 0
+					each val, key in webpageTypes
+						- radioIndex++
+						- radioId = 'type' + radioIndex
+						.item
+							input(type='radio' name='webpage-type' id=radioId value='search-engine')
+							label(for=radioId) #{val}
+				.clear
+
+
+
+			.question
+				.desktop-3.columns
+					h4 Question 2
+
+				.desktop-9.columns
+					p How would you characterize the research being done?
+					textarea(name='characterize-research' cols='80' rows='4')
+
+				.clear
+
+
+
+			.question
+				.desktop-3.columns
+					h4 Question 3
+
+				.desktop-9.columns
+					p What company is being researched? 
+					input(name='company-name' type='text')
+
+		input(type='hidden' name='next' value=navObj.nextTrackId)
+		input.submit-form(type='submit' value='Submit')

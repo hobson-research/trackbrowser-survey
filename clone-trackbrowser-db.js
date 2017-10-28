@@ -6,6 +6,8 @@ const url = require('url');
 const PNG = require('pngjs').PNG; 
 const path = require('path'); 
 const fs = require('fs'); 
+const winston = require('winston'); 
+
 
 var sessions = config.get('sessions'); 
 var listUsersRegex = []; 
@@ -24,12 +26,11 @@ var screenshotPath = config.get('dataDirectory');
 var googleMainPageCount = 0; 
 
 
-
 MongoClient.connect(dbUrl)
 	.then((dbInstance) => {
 		_db = dbInstance; 
 		_browsingDataCollection = _db.collection('browsing_data'); 
-		_surveyCollection = _db.collection('survey_collection'); 
+		_surveyCollection = _db.collection('browsing_data_filtered'); 
 
 		return _surveyCollection.remove({}); 
 	})
@@ -74,8 +75,12 @@ MongoClient.connect(dbUrl)
 			// convert all usernames to lowercase
 			doc.userName = doc.userName.toLowerCase(); 
 
+			// copy original MongoDB ID to another column
+			doc.originalId = doc._id; 
+
 			// delete _id to avoid db conflict on insert
 			delete doc._id; 
+
 
 			if (doc.type == 'navigation') {
 				filteredDocs.push(doc); 
@@ -95,8 +100,8 @@ MongoClient.connect(dbUrl)
 			}
 		}
 
-		console.log(navCount + ' navigation entries (excluding screenshots) before arrangement'); 
-		console.log(googleMainPageCount + ' google.com main page URLs'); 
+		console.log(navCount + ' navigation entries'); 
+		console.log(validScreenshotCount + ' screenshot entries'); 
 
 		console.log('=========================================='); 
  		console.log('2. Screenshot Check'); 
@@ -139,30 +144,38 @@ var arrangeNavigations = function(docs) {
 		for (var tabViewId in userNavs[userName]) {
 			// navigation to add screenshots to
 			var currentNav = null; 
-			var lastUrlObj = ''; 
-
 			var navs = userNavs[userName][tabViewId]; 
 
 			for (var i = 0, navLength = navs.length; i < navLength; i++) {
 				var nav = navs[i]; 
 
 				if (nav.type == 'navigation') {
-					currentNav = nav; 
-					currentNav.screenshots = []; 
-					lastUrlObj = url.parse(nav.url); 
+					if ((currentNav != null) && (currentNav.url == nav.url)) {
+						// console.log(nav.timestamp - currentNav.timestamp); 
 
-					continue; 
+						navs.splice(i, 1); 
+						i--; 
+						navLength--;
+
+						continue; 
+					}
+
+					else {
+						currentNav = nav; 
+						currentNav.screenshots = []; 
+						currentNav.responses = [];
+					}
 				}
 
 				else if (nav.type == 'screenshot') {
-					// 
 					if ((currentNav == null) || !isSameUrl(nav.url, currentNav.url) ) {
 						// create missing navigation entry from screenshot
 						var newNav = createNewNavFromScreenshot(nav); 
 
 						currentNav = newNav; 
+						currentNav.originalId = null; 
 						currentNav.screenshots = []; 
-						lastUrlObj = url.parse(newNav.url); 
+						currentNav.responses = [];
 
 						// insert newly created navigation entry
 						navs.splice(i, 0, newNav); 
@@ -180,7 +193,7 @@ var arrangeNavigations = function(docs) {
 		}
 	}
 
-	console.log(newNavCount + ' new navigation entries created from unmatched screenshots'); 
+	console.log(newNavCount + ' screenshots have no matching navigation'); 
 
 	var noScreenshotsLength = 0; 
 	var negativeDurationsLength = 0; 
@@ -199,6 +212,7 @@ var arrangeNavigations = function(docs) {
 				nav.trackId = nav.userName + '-' + nav.tabViewId + '-' + i;
 
 				if (nav.screenshots.length == 0) {
+					// if (!nav.url.includes('yahoo')) console.log(nav); 
 					noScreenshotsLength++; 
 				}
 

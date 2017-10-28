@@ -1,25 +1,22 @@
+doctype html
 html
 	head
-		title= title
-
-		link(rel="stylesheet", href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css")
-		link(rel="stylesheet", href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css")
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic")
-		link(rel="stylesheet", href="/css/typegrid.css")
-		link(rel="stylesheet", href="/css/style.css")
+		include includes/head.pug
 
 	body
 		section#sessions
 			.container
 				.desktop-12.columns
-					h1 Sessions
+					- var pageTitle = isResponse ? 'Sessions (view responses)' : 'Sessions'
+					h1 #{pageTitle}
 
 				for session in sessions
 					.desktop-6.columns
 						h2 #{session.title}
 
 						for user in session.users
-							a(href=`/navigations/user/` + user).link-user 
+							- var pathPrefix = isResponse ? '/response' : ''
+							a(href=pathPrefix + `/navigations/user/` + user).link-user 
 								span.username #{user}
 								- var count = countMap[user.toLowerCase()]
 

@@ -30,4 +30,8 @@ app.get('/', MainController.getIndex);
 app.get('/navigations/user/:userName', MainController.getUserNavigations); 
 app.get('/navigation/:trackId', MainController.getNavigation);
 
+app.get('/response', MainController.getResponseIndex); 
+app.get('/response/navigations/user/:userName', MainController.getUserNavigationResponse); 
+app.get('/response/navigation/:trackId', MainController.getNavigationResponse); 
+
 app.post('/navigation/:trackId', MainController.postSurvey); 

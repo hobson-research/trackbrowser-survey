@@ -334,6 +334,42 @@ h2 {
 	}
 
 
+	#survey-responses {
+		padding: 100px 0 40px 0; 
+	}
+
+		#survey-responses .item {
+		}
+
+		#survey-responses h2 {
+			font-weight: bold; 
+		}
+
+		#survey-responses h3 {
+			margin-top: 30px; 
+			border-top: 1px solid #33cc22; 
+		}
+
+			#survey-responses h3 span {
+				color: #fff; 
+				background: #33cc22; 
+				display: inline-block; 
+				padding: 5px 11px;
+				margin-bottom: 6px; 
+			}
+
+		#survey-responses h4 {
+			color: #ccc; 
+			margin-top: 12px; 
+		}
+
+		#survey-responses p.question {
+			font-weight: bold; 
+			padding-bottom: 10px; 
+			margin-bottom: 10px; 
+		}
+
+
 
 	#survey {
 		font-size: 18px; 
@@ -372,7 +408,9 @@ h2 {
 			padding: 15px 20px;  
 		}
 
-
+		#survey .question {
+			margin-top: 30px; 
+		}
 
 		#survey input[type=submit].submit-form {
 			color: #fff; 
@@ -394,18 +432,10 @@ h2 {
 				background: #33cc22; 
 			}
 
-
-<<<<<<< HEAD
-=======
 	.screenshot-wrapper {
 		margin-bottom: 60px; 
 	}
 
 	.img-screenshot {
 		border: 1px solid #ccc; 
-	}
->>>>>>> 37bcf7fb3894a778b1a912c27b3e0bc3c9d52fbd
-
-	.question {
-		margin-top: 30px; 
 	}
