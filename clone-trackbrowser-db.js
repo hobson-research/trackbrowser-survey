@@ -8,6 +8,13 @@ const path = require('path');
 const fs = require('fs'); 
 const winston = require('winston'); 
 
+winston.level = 'info'; 
+
+const logger = new (winston.Logger)({
+	transports: [
+		new (winston.transports.File)({ filename: './logs/clone-trackbrowser-db.log' })
+	]
+});
 
 var sessions = config.get('sessions'); 
 var listUsersRegex = []; 
@@ -125,6 +132,20 @@ MongoClient.connect(dbUrl)
 
 
 
+/*
+	first categorize all navigation entries by usernames
+	then, categorize each user navigation by browser tab ID
+
+	sort by timestamp to identify which navigation/screenshot entry first took place in the browser
+
+	there are lots of corner cases
+
+	- in many cases, some screenshot entries may be recorded to the server before the corresponding navigation event packet arrives. for this reason, URLs must be saved by each browser tab for lookup
+
+	- users will frequently switch between tabs. screenshots are only taken when the user is actively using the tab (since TrackBrowser takes a "physical" screenshot before uploading to the server). this may result in a navigation event be recorded long before the screenshot arrives. again, this needs URL comparison in the same browser tab
+
+	- other corner cases still being discovered
+*/
 var arrangeNavigations = function(docs) {
 	var userNavs = {}; 
 	var allNavs = []; 
@@ -151,7 +172,7 @@ var arrangeNavigations = function(docs) {
 
 				if (nav.type == 'navigation') {
 					if ((currentNav != null) && (currentNav.url == nav.url)) {
-						// console.log(nav.timestamp - currentNav.timestamp); 
+						logger.info((nav.timestamp - currentNav.timestamp) / 1000 + ' seconds'); 
 
 						navs.splice(i, 1); 
 						i--; 
@@ -268,6 +289,13 @@ var arrangeNavigations = function(docs) {
 	return allNavs; 
 }; 
 
+
+
+/*
+	check if a navigation's URL is in a valid format
+	and does not contain forbidden hostnames in its URL
+	(facebook, gmail, compass, etc)
+*/
 var isValidNavigation = function(navObj) {
 	urlString = navObj.url; 
 
@@ -301,6 +329,13 @@ var isValidNavigation = function(navObj) {
 
 
 
+/*
+	check if a given image file is valid and not blank
+
+	1. file exists
+	2. is not a broken PNG
+	3. is blank
+*/
 var isValidScreenshot = function(fileName) {
 	return true; 
 	/*
@@ -356,6 +391,9 @@ var isValidScreenshot = function(fileName) {
 
 
 
+/*
+	if a screenshot does not have a matching navigation entry, create a new navigation entry
+*/
 var createNewNavFromScreenshot = function(screenshot) {
 	return {
 		'type': 'navigation', 
@@ -369,9 +407,14 @@ var createNewNavFromScreenshot = function(screenshot) {
 
 
 
+/*
+	compare if two URLs are practically the same (query parameters may change inside the same page - those changes should be treated as a same navigation entry)
+*/
 var isSameUrl = function(url1, url2) {
 	var urlObj1 = url.parse(url1); 
 	var urlObj2 = url.parse(url2); 
 
 	return ((urlObj1.hostname == urlObj2.hostname) && (urlObj1.path == urlObj2.path)); 
+
+	// TODO: Test cases
 }
