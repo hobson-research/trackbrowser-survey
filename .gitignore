@@ -59,3 +59,6 @@ typings/
 
 # project-related documents
 docs/
+
+# csv export files
+export/
