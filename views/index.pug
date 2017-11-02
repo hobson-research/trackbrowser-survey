@@ -13,11 +13,14 @@ html
 							span.superscript Responses
 
 
-				if (isResponse)
-					.desktop-3.columns
+				.desktop-3.columns
+					if (isResponse)
 						a(href='/response/export').button
 							i.icon.ion-ios-download 
 							| Export to CSV
+					else
+						a(href='/response').button
+							| View Responses	
 
 				.clear
 
