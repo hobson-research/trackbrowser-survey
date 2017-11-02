@@ -10,6 +10,8 @@ html
 					- var pageTitle = isResponse ? 'Sessions (view responses)' : 'Sessions'
 					h1 #{pageTitle}
 
+					a(href='/response/export') Export to CSV
+
 				for session in sessions
 					.desktop-6.columns
 						h2 #{session.title}

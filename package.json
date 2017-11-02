@@ -20,6 +20,7 @@
     "body-parser": "^1.18.2",
     "config": "^1.26.2",
     "express": "^4.16.1",
+    "json2csv": "^3.11.5",
     "mongo-express": "^0.43.1",
     "mongodb": "^2.2.31",
     "pngjs": "^3.3.0",

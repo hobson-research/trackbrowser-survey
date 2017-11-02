@@ -69,11 +69,8 @@ MongoClient.connect(dbUrl)
 		docs = docs.filter(isValidNavigation); 
 		console.log(docs.length + ' entries left after filtering out URLs with possible private information'); 
 
-		var filteredDocs = []; 
-
 		var navCount = 0; 
-		var validScreenshotCount = 0; 
-		var invalidScreenshotCount = 0;
+		var screenshotCount = 0; 
 
 		// lowercase usernames and delete mongodb id to avoid conflicts
 		for (var i = 0; i < docs.length; i++) {
@@ -90,31 +87,23 @@ MongoClient.connect(dbUrl)
 
 
 			if (doc.type == 'navigation') {
-				filteredDocs.push(doc); 
 				navCount++; 
 			}
 			else if (doc.type == 'screenshot') {
-				var isValid = await isValidScreenshot(doc.fileName); 
-				
-				if (isValid) {
-					filteredDocs.push(doc); 
-					validScreenshotCount++; 
-				}
-				else {
-					invalidScreenshotCount++; 
-					console.log('Excluding screenshot ' + doc.fileName); 
-				}
+				screenshotCount++; 
+			}
+			else {
 			}
 		}
 
 		console.log(navCount + ' navigation entries'); 
-		console.log(validScreenshotCount + ' screenshot entries'); 
+		console.log(screenshotCount + ' screenshot entries'); 
 
 		console.log('=========================================='); 
  		console.log('2. Screenshot Check'); 
-		console.log(validScreenshotCount + ' valid screenshots, ' + invalidScreenshotCount + ' invalid screenshots'); 
+		console.log(screenshotCount + ' screenshots'); 
 
-		return arrangeNavigations(filteredDocs); 
+		return arrangeNavigations(docs); 
 	})
 	.then((allNavs) => {
 		return _surveyCollection.
@@ -172,8 +161,6 @@ var arrangeNavigations = function(docs) {
 
 				if (nav.type == 'navigation') {
 					if ((currentNav != null) && (currentNav.url == nav.url)) {
-						logger.info((nav.timestamp - currentNav.timestamp) / 1000 + ' seconds'); 
-
 						navs.splice(i, 1); 
 						i--; 
 						navLength--;
@@ -197,6 +184,8 @@ var arrangeNavigations = function(docs) {
 						currentNav.originalId = null; 
 						currentNav.screenshots = []; 
 						currentNav.responses = [];
+
+						logger.info(nav);
 
 						// insert newly created navigation entry
 						navs.splice(i, 0, newNav); 

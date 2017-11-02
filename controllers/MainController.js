@@ -1,4 +1,6 @@
 const config = require('config'); 
+const json2csv = require('json2csv'); 
+const fs = require('fs'); 
 const Navigation = require(__dirname + '/../models/Navigation');
 
 const webpageTypes = config.get('webpageTypes'); 
@@ -37,6 +39,8 @@ MainController.postSurvey = function(req, res) {
 		'company-name': req.body['company-name']
 	};
 
+	console.log(req.body); 
+
 	Navigation.recordResponse(req.params.trackId, responseObj)
 		.then((recordResult) => {
 			if(req.body.next != '') {
@@ -47,7 +51,48 @@ MainController.postSurvey = function(req, res) {
 		});
 }; 
 
+MainController.exportResponsesToCSV = function(req, res) {
+	var fields = ['nav-username', 'nav-url', 'nav-date', 'response-date', 'webpage-type', 'characterize-research', 'company-name']; 
+	var browsingData = []; 
+	var csvData = []; 
 
+	var exportDateStr = new Date().toISOString().substr(0, 10).replace(/-/g, "_"); 
+	var exportFileName = "tb_responses" + "_" + exportDateStr + ".csv"; 
+	var exportFilePath =  __dirname + "/../export/" + exportFileName; 
+
+	Navigation.getAllResponses()
+		.then((allResponses) => {
+			allResponses.forEach((nav) => {
+				nav.responses.forEach((response) => {
+					csvData.push({
+						'nav-username': nav.userName, 
+						'nav-url': nav.url, 
+						'nav-date': nav.date, 
+						'response-date': new Date(response['timestamp']).toGMTString(), 
+						'webpage-type': response['webpage-type'], 
+						'characterize-research': response['characterize-research'], 
+						'company-name': response['company-name']
+					});
+				});
+			});
+
+			json2csv({ data: csvData, fields: fields }, function(err, csv) {
+				if (err) {
+					console.log(err); 
+					return; 
+				}
+				
+				fs.writeFile(exportFilePath, csv, function(err) {
+					if (err) {
+						console.log("error exporting csv file in exportBrowsingDocsToCSV()"); 
+					}
+					
+					console.log("file exported"); 
+					res.download(exportFilePath); 
+				});
+			});
+		}); 
+};
 
 var renderIndex = function(req, res, isResponse) {
 	Navigation.getAllUsersNavigationCounts(isResponse)
@@ -76,7 +121,7 @@ var renderUserNavigations = function(req, res, isResponse) {
 };
 
 var renderNavigation = function(req, res, isResponse) {
-	Navigation.getNavigationInfoById(req.params.trackId)
+	Navigation.getNavigationById(req.params.trackId)
 		.then((navObj) => {
 			res.render('navigation', {
 				'navObj': navObj, 

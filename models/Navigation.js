@@ -15,7 +15,7 @@ MongoClient.connect(url)
 	});	
 
 
-
+// find all navigation entries by username
 Navigation.getNavigationsByUserName = function(userName, isResponse) {
 	var findQuery = {
 		'userName': new RegExp('^' + userName + '$', 'i'), 
@@ -32,7 +32,8 @@ Navigation.getNavigationsByUserName = function(userName, isResponse) {
 };
 
 
-
+// get navigation counts by each user
+// if isResponse flag is true, return the count of navigation entries with at least one user response recorded
 Navigation.getAllUsersNavigationCounts = function(isResponse) {
 	return new Promise((resolve, reject) => {
 		var userCountMap = {}; 
@@ -46,7 +47,6 @@ Navigation.getAllUsersNavigationCounts = function(isResponse) {
 			{
 				'$project': {
 					'userName': 1, 
-					'responses': 1, 
 					'numResponses': {
 						'$size': '$responses'
 					}
@@ -70,25 +70,30 @@ Navigation.getAllUsersNavigationCounts = function(isResponse) {
 };
 
 
+// get all navigation entries with at least one response
+Navigation.getAllResponses = function() {
+	return new Promise((resolve, reject) => {
+		var responseDocs = []; 
 
-Navigation.getNavigationInfoById = function(trackId) {
-	return new Promise(
-		(resolve, reject) => {
-			browsingDataCollection
-				.findOne({ trackId: trackId })
-				.then((currentNav) => {
-					resolve(currentNav); 
-				})
-				.catch((err) => {
-					console.log('err in getNavigationInfoById()'); 
-					console.log(err);
-				});
-		}
-	);
+		browsingDataCollection.find({
+			'type': 'navigation'
+		})
+			.forEach((doc) => {
+				if (doc.responses.length > 0) {
+					delete doc.screenshots;
+
+					responseDocs.push(doc); 
+				}
+			}, 
+			(err) => {
+				if (err) reject(err); 
+				else resolve(responseDocs); 
+			});
+	}); 
 };
 
 
-
+// query and return navigation info by tracking id
 Navigation.getNavigationById = function(trackId) {
 	return browsingDataCollection
 		.findOne({
