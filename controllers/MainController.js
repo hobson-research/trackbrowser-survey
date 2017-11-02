@@ -87,7 +87,6 @@ MainController.exportResponsesToCSV = function(req, res) {
 						console.log("error exporting csv file in exportBrowsingDocsToCSV()"); 
 					}
 					
-					console.log("file exported"); 
 					res.download(exportFilePath); 
 				});
 			});

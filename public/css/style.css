@@ -117,9 +117,41 @@ h2 {
 		padding: 50px 0; 
 	}
 
+		#sessions a.button {
+			text-align: center; 
+			display: block;
+			color: #777; 
+			background: #f5f5f5; 
+			font-size: 16px; 
+			line-height: 16px; 
+			padding: 22px 25px; 
+			border: 1px solid #e5e5e5; 
+		}
+		
+			#sessions a.button:hover {
+				color: #000; 
+				border-color: #333; 
+			}
+		
+			#sessions a.button i.icon {
+				padding-right: 10px; 
+			}
+
 		#sessions h1 {
 			padding-bottom: 20px; 
+			margin-bottom: 30px; 
 		}
+
+			#sessions h1 span.superscript {
+				display: inline-block; 
+				padding-bottom: 4px; 
+				border-bottom: 1px solid #333; 
+				font-size: 16px; 
+				line-height: 16px; 
+				position: relative; 
+				top: -10px; 
+				margin-left: 10px; 
+			}
 
 		#sessions h2 {
 			padding-bottom: 20px; 
