@@ -17,11 +17,25 @@
 	"webpageTypes": {
 		"search-engine": "Search Engine (e.g., Google)", 
 		"data-aggregator": "Data Aggregator (e.g., Yahoo Finance, Google Finance)", 
-		"investor-relations": "A Company's Investor Relations Page", 
+		"investor-relations": "A Company's Webpage", 
 		"sec-filings": "Corporate Filings With The SEC (e.g., finding or reading 10-K, 10-Q, 8-K, etc.)", 
-		"news-article": "News Article About a Company", 
+		"news-article": "News Article", 
 		"investment-blog": "Investment Blog", 
 		"irrelevant": "Irrelevant (e.g., checking mail, checking Facebook, etc.)", 
 		"other": "Other"
+	}, 
+	"characterizeResearch": {
+		"fundamental-analysis": "Finding or Reading a Company’s Corporate Filings (10-K, 10-Q, 8-K, etc.) – Fundamental Analysis", 
+		"technical-analysis": "Technical Analysis (e.g., researching stock trends, historical price, ratios, etc.)", 
+		"current-news": "Reading Current Events/News about the Company of interest", 
+		"company-background": "Learning Company Background (e.g., history, management information, company practices, etc.)", 
+		"general-market-conditions": "Investigating General Market Conditions", 
+		"industry-analysis": "Industry Analysis", 
+		"competitor-analysis": "Competitor Analysis", 
+		"gather-analyst-forecasts": "Gathering Analyst Forecasts/Estimates", 
+		"gather-3rd-party-opinions": "Gathering Other 3rd party Opinions (e.g., Investment Blog Predictions, etc.)", 
+		"other": "Other", 
+		"unable-to-tell": "Unable to tell yet (initializing research)", 
+		"no-research": "No research is being done"
 	}
 }

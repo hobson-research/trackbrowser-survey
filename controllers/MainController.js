@@ -4,6 +4,7 @@ const fs = require('fs');
 const Navigation = require(__dirname + '/../models/Navigation');
 
 const webpageTypes = config.get('webpageTypes'); 
+const characterizeResearch = config.get('characterizeResearch'); 
 
 var MainController = {}; 
 
@@ -39,7 +40,12 @@ MainController.postSurvey = function(req, res) {
 		'company-name': req.body['company-name']
 	};
 
-	console.log(req.body); 
+	if (req.body['characterize-research-other']) {
+		responseObj['characterize-research'] = 'Other - ' + req.body['characterize-research-other']; 
+	}
+
+	// console.log('responseObj'); 
+	// console.log(responseObj); 
 
 	Navigation.recordResponse(req.params.trackId, responseObj)
 		.then((recordResult) => {
@@ -125,7 +131,8 @@ var renderNavigation = function(req, res, isResponse) {
 			res.render('navigation', {
 				'navObj': navObj, 
 				'isResponse': isResponse, 
-				'webpageTypes' : webpageTypes
+				'webpageTypes' : webpageTypes, 
+				'characterizeResearch': characterizeResearch
 			});
 		})
 		.catch((err) => {

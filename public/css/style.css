@@ -440,6 +440,16 @@ h2 {
 			padding: 15px 20px;  
 		}
 
+			#survey input[type=text].option-other {
+				background: transparent; 
+				padding: 8px 0; 
+				border: 0; 
+				outline: none; 
+				border-bottom: 1px solid #eee; 
+				margin-bottom: 10px; 
+			}
+
+
 		#survey .question {
 			margin-top: 30px; 
 		}

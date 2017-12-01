@@ -15,7 +15,7 @@ section#survey
 					- var radioIndex = 0
 					each val, key in webpageTypes
 						- radioIndex++
-						- radioId = 'type' + radioIndex
+						- radioId = 'page-type' + radioIndex
 						.item
 							input(type='radio' name='webpage-type' id=radioId value=val)
 							label(for=radioId) #{val}
@@ -29,8 +29,34 @@ section#survey
 
 				.desktop-9.columns
 					p How would you characterize the research being done?
-					textarea(name='characterize-research' cols='80' rows='4')
 
+					- var radioIndex = 0
+					each val, key in characterizeResearch
+						- var isOther = (val == 'Other'); 
+						- radioIndex++
+						- radioId = 'research-type' + radioIndex
+						.item
+							input(class={"option-other": isOther} type='radio' name='characterize-research' id=radioId value=val)
+							label(for=radioId) #{val}
+
+						- if (isOther)
+							input(class={"option-other": isOther} name='characterize-research-other' type='text' data-link-id=radioId)
+
+							script.
+								$(document).ready(function() {
+									var $otherRadio = $('input[type=radio].option-other'); 
+
+									var $otherText = $('input[type=text].option-other')
+
+									$otherRadio.click(function() {
+										$otherText.focus(); 
+									});
+
+									$otherText.focus(function() {
+										console.log('text selected'); 
+										$otherRadio.prop('checked', true); 
+									}); 
+								});
 				.clear
 
 
