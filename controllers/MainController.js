@@ -44,9 +44,6 @@ MainController.postSurvey = function(req, res) {
 		responseObj['characterize-research'] = 'Other - ' + req.body['characterize-research-other']; 
 	}
 
-	// console.log('responseObj'); 
-	// console.log(responseObj); 
-
 	Navigation.recordResponse(req.params.trackId, responseObj)
 		.then((recordResult) => {
 			if(req.body.next != '') {
