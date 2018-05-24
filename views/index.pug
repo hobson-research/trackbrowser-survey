@@ -24,6 +24,8 @@ html
 
 				.clear
 
+				- var sessionCount = 0
+        
 				for session in sessions
 					.desktop-6.columns
 						h2 #{session.title}
@@ -38,6 +40,9 @@ html
 									span.count #{count}
 								else
 									span.count.not-found Not found
-
-
+                  
+					- sessionCount++
+					if (sessionCount % 2 == 0)
+						.clear(style='height: 20px;')
+          
 				.clear

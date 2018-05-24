@@ -20,10 +20,16 @@ var sessions = config.get('sessions');
 var listUsersRegex = []; 
 var excludeHostnames = config.get('excludeHostnames'); 
 
+// List the title of sessions to update
+// Example: var sessionsToUpdate = ["Spring 2018"];
+var sessionsToUpdate = [];
+
 sessions.forEach((session) => {
-	session.users.forEach((userName) => {
-		listUsersRegex.push(new RegExp('^' + userName + '$', 'i'));
-	});
+  if (sessionsToUpdate.includes(session.title)) {
+    session.users.forEach((userName) => {
+      listUsersRegex.push(new RegExp('^' + userName + '$', 'i'));
+    });
+  }
 });
 
 var _db; 
@@ -38,8 +44,13 @@ MongoClient.connect(dbUrl)
 		_db = dbInstance; 
 		_browsingDataCollection = _db.collection('browsing_data'); 
 		_surveyCollection = _db.collection('browsing_data_filtered'); 
-
-		return _surveyCollection.remove({}); 
+    
+    // To completely create a new survey collection, 
+    // uncomment the line below
+		// return _surveyCollection.remove({}); 
+  
+    // otherwise, keep the existing survey collections
+		return true; 
 	})
 	.then((removeResults) => {
 		return _browsingDataCollection
